@@ -28,7 +28,6 @@ Complete the following software and AI-model items to configure your environment
 
 You must deploy all of the following Azure Services:
 
--	[Azure App Service](https://azure.microsoft.com/en-us/services/app-service/), which you will use with the Player Widget.
 -	[Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/), where you will store your custom Docker containers.
 -	[Azure IoT Hub](https://azure.microsoft.com/en-us/services/iot-hub/), which will manage the IoT Edge solution.
 -	[Azure Storage](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview), which will be used to store your videos.

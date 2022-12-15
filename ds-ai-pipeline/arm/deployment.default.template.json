@@ -80,7 +80,7 @@
             "status": "running",
             "restartPolicy": "always",
             "settings": {
-              "image": "p4dselfhostingtestacr.azurecr.io/rtspsim:02034ff-arm64",
+              "image": "mcr.microsoft.com/azureedgedevices/azdartspsim:0df729a-arm64v8",
               "createOptions": {
                 "HostConfig": {
                   "Binds": [
