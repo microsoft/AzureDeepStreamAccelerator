@@ -1,0 +1,78 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "stream-01",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "deepStream": {
+                "enable": true,
+                "pipelineConfigs": [
+                    {
+                        "id": "TritonTest",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": {
+                            "configFile": "/MyCustomAssets/onnx_ssd_nopostprocess.txt",
+                            "pyFile": "/MyCustomAssets/onnx_ssd_parser.py"
+                        },
+                        "secondaryModelConfigPaths": [],
+                        "trackerConfigPath": "",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "stream-01",
+                        "uname": "",
+                        "password": "",
+                        "configId": "TritonTest"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}

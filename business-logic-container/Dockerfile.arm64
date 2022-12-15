@@ -1,0 +1,12 @@
+FROM arm64v8/python:3.10-slim-buster
+
+RUN apt-get update && apt-get install -y libgeos-c1v5 libgeos-3.7.1 qemu
+
+WORKDIR /app
+
+COPY requirements.txt ./
+COPY . .
+RUN pip install -r requirements.txt && rm -rf tests
+
+
+CMD [ "python3", "-u", "./main.py" ]

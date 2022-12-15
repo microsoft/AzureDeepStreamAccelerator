@@ -1,0 +1,16 @@
+[property]
+gpu-id=0
+net-scale-factor=1
+#0=RGB, 1=BGR
+model-color-format=1
+onnx-file=model.onnx
+labelfile-path=labels.txt
+## 0=FP32, 1=INT8, 2=FP16 mode
+network-mode=0
+num-detected-classes=9
+gie-unique-id=1
+is-classifier=0
+maintain-aspect-ratio=1
+#output-blob-names=output-blob-names=coverage;bbox
+parse-bbox-func-name=NvDsInferParseCustomYoloV2Tiny
+custom-lib-path=libnvdsinfer_custom_impl_Yolo_dp61_arm.so

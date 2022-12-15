@@ -1,0 +1,5 @@
+azure-storage-blob
+nvidia-tao
+pycocotools
+absl-py
+tensorflow-object-detection-api

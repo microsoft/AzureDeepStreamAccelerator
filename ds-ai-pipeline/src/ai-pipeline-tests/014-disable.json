@@ -1,0 +1,65 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "stream-01",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "REPLACE-WITH-URI",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "deepStream": {
+                "enable": false,
+                "pipelineConfigs": [
+                    {
+                        "id": "PeopleDetection",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": "REPLACE-TBD",
+                        "secondaryModelConfigPaths": "",
+                        "trackerConfigPath": "",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {}
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "stream-01",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PeopleDetection"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}

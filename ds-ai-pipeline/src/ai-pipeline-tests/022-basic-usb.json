@@ -1,0 +1,75 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "stream-01",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "USB"
+                    },
+                    "endpoint": "/dev/video0",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "deepStream": {
+                "enable": true,
+                "pipelineConfigs": [
+                    {
+                        "id": "PeopleDetection",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": "config_examples/pgie_config.txt",
+                        "secondaryModelConfigPaths": "",
+                        "trackerConfigPath": "",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "stream-01",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PeopleDetection"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}

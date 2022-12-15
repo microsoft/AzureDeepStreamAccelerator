@@ -1,0 +1,10 @@
+FROM amd64/python:3.10-slim-buster
+
+WORKDIR /app
+
+COPY requirements.txt ./
+COPY . .
+RUN pip install -r requirements.txt && rm -rf tests
+
+
+CMD [ "python3", "-u", "./main.py" ]

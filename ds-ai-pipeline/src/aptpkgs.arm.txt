@@ -1,0 +1,12 @@
+wget
+python3-pip
+libcairo2-dev
+libjpeg-dev
+libgif-dev
+python3-gi
+python3-gst-1.0
+unzip
+python3-opencv
+gir1.2-gst-rtsp-server-1.0
+v4l-utils
+libeigen3-dev

@@ -1,0 +1,18 @@
+# Run from this directory like this:
+# docker buildx build --platform linux/arm64 --load -t <WHATEVER> -f Dockerfile.test.arm64 ..
+FROM arm64v8/python:3.10-slim-buster
+
+ARG TEST=test-ai-pipeline
+
+RUN apt-get update && apt-get install libgeos-c1v5 libgeos-3.7.1
+
+WORKDIR /app
+
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+COPY . .
+COPY ./tests/${TEST}/main.py main.py
+
+# CMD sleep infinity
+CMD [ "python3", "-u", "./main.py" ]

@@ -1,0 +1,78 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "stream-01",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "rtsp://rtspsim:554/media/peoplewaiting.mkv",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "deepStream": {
+                "enable": true,
+                "pipelineConfigs": [
+                    {
+                        "id": "PoseDetection",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": {
+                            "configFile": "/CustomParsers/models/bodypose2d/bodypose2d_pgie_config.txt",
+                            "pyFile": "/CustomParsers/models/bodypose2d/body_pose_parser.py"
+                        },
+                        "secondaryModelConfigPaths": "",
+                        "trackerConfigPath": "",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "stream-01",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PoseDetection"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}

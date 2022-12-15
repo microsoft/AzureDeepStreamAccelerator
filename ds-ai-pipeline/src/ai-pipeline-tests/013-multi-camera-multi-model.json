@@ -1,0 +1,386 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "stream-01",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-02",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_qHD.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-03",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-04",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_qHD.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-05",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-06",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-07",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_qHD.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-08",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_qHD.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "deepStream": {
+                "enable": true,
+                "pipelineConfigs": [
+                    {
+                        "id": "LicensePlateTracking",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": "config_examples/pgie_config.txt",
+                        "secondaryModelConfigPaths": [
+                            "config_examples/sgie1_config.txt",
+                            "config_examples/sgie2_config.txt",
+                            "config_examples/sgie3_config.txt"
+                        ],
+                        "trackerConfigPath": "config_examples/tracker_config.txt",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    },
+                    {
+                        "id": "PersonTracking",
+                        "unsecureZipUrl": "https://tsampigeworksp7356501018.blob.core.windows.net/peoplenet/p4d-cascade-scenario1.zip",
+                        "primaryModelConfigPath": "primarydetector/config_primary_detector.txt",
+                        "secondaryModelConfigPaths": "vehicletypenet/config_vehicletypes.txt",
+                        "trackerConfigPath": "",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    },
+                    {
+                        "id": "PoseDetection",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": {
+                            "configFile": "/CustomParsers/models/bodypose2d/bodypose2d_pgie_config.txt",
+                            "pyFile": "/CustomParsers/models/bodypose2d/body_pose_parser.py"
+                        },
+                        "secondaryModelConfigPaths": "",
+                        "trackerConfigPath": "",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "stream-01",
+                        "uname": "",
+                        "password": "",
+                        "configId": "LicensePlateTracking"
+                    },
+                    {
+                        "name": "stream-02",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PersonTracking"
+                    },
+                    {
+                        "name": "stream-03",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PoseDetection"
+                    },
+                    {
+                        "name": "stream-04",
+                        "uname": "",
+                        "password": "",
+                        "configId": "LicensePlateTracking"
+                    },
+                    {
+                        "name": "stream-05",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PersonTracking"
+                    },
+                    {
+                        "name": "stream-06",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PoseDetection"
+                    },
+                    {
+                        "name": "stream-07",
+                        "uname": "",
+                        "password": "",
+                        "configId": "LicensePlateTracking"
+                    },
+                    {
+                        "name": "stream-08",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PersonTracking"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}

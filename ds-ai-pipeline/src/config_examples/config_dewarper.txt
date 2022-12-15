@@ -1,0 +1,22 @@
+[property]
+output-width=1920
+output-height=1080
+
+#########################################
+# Note - Max 4 surfaces are supported
+#########################################R
+num-batch-buffers=1 
+[surface0]
+# 1=PushBroom, 2=VertRadCyl
+projection-type=2
+surface-index=1
+#dewarped surface parameters
+width=1472
+height=1384
+top-angle=90
+bottom-angle=-90
+pitch=0
+yaw=0
+roll=0
+focal-length=350
+src-fov=180

@@ -1,0 +1,113 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "stream-01",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "REPLACE-WITH-URI",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-02",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "deepStream": {
+                "enable": true,
+                "pipelineConfigs": [
+                    {
+                        "id": "PeopleDetection",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": "config_examples/pgie_config.txt",
+                        "secondaryModelConfigPaths": "",
+                        "trackerConfigPath": "",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": false
+                            }
+                        }
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "INCORRECT_VALUE",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PeopleDetection"
+                    },
+                    {
+                        "name": "stream-02",
+                        "uname": "",
+                        "password": "",
+                        "configId": "PeopleDetection"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}

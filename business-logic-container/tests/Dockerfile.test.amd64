@@ -1,0 +1,16 @@
+# Run from this directory like this:
+# docker build -f Dockerfile.test.amd64 -t <whatever> ..
+FROM amd64/python:3.10-slim-buster
+
+ARG TEST=test-ai-pipeline
+
+WORKDIR /app
+
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+COPY . .
+COPY ./tests/${TEST}/main.py main.py
+
+# CMD sleep infinity
+CMD [ "python3", "-u", "./main.py" ]

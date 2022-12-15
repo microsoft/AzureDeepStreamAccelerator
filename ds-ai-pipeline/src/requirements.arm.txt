@@ -1,0 +1,7 @@
+azure-iot-device
+opentelemetry-sdk==1.13.0
+azure-monitor-opentelemetry-exporter==1.0.0b8
+furl
+scipy
+numpy
+pyyaml

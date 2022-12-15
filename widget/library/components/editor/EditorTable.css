@@ -1,0 +1,23 @@
+tr {
+    background-color: 1px solid #fff;
+}
+
+tr.rowHover:hover {
+    background-color: #f3f2f1;
+    cursor: pointer;
+}
+
+.scrollhost::-webkit-scrollbar {
+    /* display: none; */
+}
+
+.scrollhost ::-moz-scrollbar {
+    /* display: none; */
+}
+
+.scrollhost {
+    overflow: auto;
+    /* -ms-overflow-style: none;
+    scrollbar-color: transparent transparent; */
+    /*just hides the scrollbar for firefox */
+}

@@ -1,0 +1,12 @@
+#pragma once
+
+extern int INPUT_W, INPUT_H;
+extern float TRACK_THRESH, HIGH_THRESH;
+extern float MATCH_THRESH, MATCH_THRESH_LOW, MATCH_THRESH_UNCONFIRMED;
+extern int FRAME_RATE, TRACK_BUFFER;
+extern int MAX_TIME_LOST;
+extern int PREDICT_LOST_BUFFER, PREDICT_LOST_THRESH;
+extern int NUM_CLASSES;
+extern int NUM_OMP_THREADS;
+extern bool USING_DET_BBOX;
+extern int CLIP_BORDER;

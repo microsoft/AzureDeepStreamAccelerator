@@ -1,0 +1,58 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "stream-01",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4"
+                }
+            ],
+            "deepStream": {
+                "enable": true,
+                "pipelineConfigs": [
+                    {
+                        "id": "ManufacturingDefectDetection",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": {
+                            "configFile": "CUSTOM_PARSER_EXAMPLES/efficientnet_lite4/efficientnet_lite4_nopostprocess.txt",
+                            "pyFile": "CUSTOM_PARSER_EXAMPLES/efficientnet_lite4/uparser_efficientnet_lite4.py"
+                        },
+                        "secondaryModelConfigPaths": "",
+                        "trackerConfigPath": "",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false,
+                                "x0": 480,
+                                "x1": 1920,
+                                "y0": 0,
+                                "y1": 1080
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "stream-01",
+                        "uname": "",
+                        "password": "",
+                        "configId": "ManufacturingDefectDetection"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}

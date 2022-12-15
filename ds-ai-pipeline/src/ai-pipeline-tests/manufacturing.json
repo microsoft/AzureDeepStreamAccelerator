@@ -1,0 +1,51 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "rtspsim",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "FILE"
+                    },
+                    "endpoint": "file:///ms/ds-ai-pipeline/src/sample-input-2.mp4"
+                }
+            ],
+            "deepStream": {
+                "enable": true,
+                "pipelineConfigs": [
+                    {
+                        "id": "Manufacturing",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": "CUSTOM_PARSER_EXAMPLES/manufacturing/pgie_config.txt",
+                        "secondaryModelConfigPaths": "",
+                        "trackerConfigPath": "CUSTOM_PARSER_EXAMPLES/manufacturing/tracker_config.txt",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "rtspsim",
+                        "uname": "",
+                        "password": "",
+                        "configId": "Manufacturing"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}

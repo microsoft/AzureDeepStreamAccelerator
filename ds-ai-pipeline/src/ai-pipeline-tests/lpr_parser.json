@@ -1,0 +1,59 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "stream-01",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///ms/ds-ai-pipeline/src/VideoAnalyticsLicensePlateRecognition.mp4"
+                }
+            ],
+            "deepStream": {
+                "enable": true,
+                "pipelineConfigs": [
+                    {
+                        "id": "ManufacturingDefectDetection",
+                        "unsecureZipUrl": "",
+                        "primaryModelConfigPath": "CUSTOM_PARSER_EXAMPLES/lpr/trafficamnet_config.txt",
+                        "secondaryModelConfigPaths": [
+                            {
+                                "configFile": "CUSTOM_PARSER_EXAMPLES/lpr/lpd_us_config.txt"
+                            },
+                            {
+                                "configFile": "CUSTOM_PARSER_EXAMPLES/lpr/lpr_config_sgie_us.txt",
+                                "pyFile": "CUSTOM_PARSER_EXAMPLES/lpr/lpr_parser.py"
+                            }
+                        ],
+                        "trackerConfigPath": "CUSTOM_PARSER_EXAMPLES/lpr/lpr_sample_tracker_config.txt",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "stream-01",
+                        "uname": "",
+                        "password": "",
+                        "configId": "ManufacturingDefectDetection"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}

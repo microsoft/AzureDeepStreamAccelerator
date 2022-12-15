@@ -1,0 +1,332 @@
+{
+  "$schema-template": "2.0.0",
+  "modulesContent": {
+    "$edgeAgent": {
+      "properties.desired": {
+        "schemaVersion": "1.1",
+        "runtime": {
+          "type": "docker",
+          "settings": {
+            "minDockerVersion": "v1.25",
+            "registryCredentials": {
+              "test-images": {
+                "address": "$CONTAINER_REGISTRY_NAME",
+                "password": "$CONTAINER_REGISTRY_PASSWORD",
+                "username": "$CONTAINER_REGISTRY_USERNAME"
+              }
+            }
+          }
+        },
+        "systemModules": {
+          "edgeAgent": {
+            "type": "docker",
+            "settings": {
+              "image": "mcr.microsoft.com/azureiotedge-agent:1.4",
+              "createOptions": {}
+            }
+          },
+          "edgeHub": {
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "mcr.microsoft.com/azureiotedge-hub:1.4",
+              "createOptions": {
+                "HostConfig": {
+                  "PortBindings": {
+                    "5671/tcp": [
+                      {
+                        "HostPort": "5671"
+                      }
+                    ],
+                    "8883/tcp": [
+                      {
+                        "HostPort": "8883"
+                      }
+                    ],
+                    "443/tcp": [
+                      {
+                        "HostPort": "443"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "modules": {
+          "BusinessLogicModule": {
+            "version": "1.0",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+
+            "settings": {
+              "image": "$BUSINESS_LOGIC_IMAGE_URI",
+              "createOptions": {
+                "HostConfig": {
+                  "Binds": [
+                    "VideoUploaderCache:/tmp/VideoUploaderCache"
+                  ]
+                }
+              }
+            }
+          },
+          "rtspsim": {
+            "version": "1.0",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "p4dselfhostingtestacr.azurecr.io/rtspsim:02034ff-arm64",
+              "createOptions": {
+                "HostConfig": {
+                  "Binds": [
+                  ]
+                }
+              }
+            }
+          },
+          "VideoUploader": {
+            "version": "1.0.1",
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "mcr.microsoft.com/azureedgedevices/videouploader:0.0.1-arm64",
+              "createOptions": {
+                "HostConfig": {
+                  "Binds": [
+                    "VideoUploaderCache:/app/VideoUploaderCache"
+                  ]
+                }
+              }
+            },
+            "env": {
+              "IOTHUB_DEVICE_CONNECTION_STRING": {
+                "value": "${IOTHUB_DEVICE_CONNECTION_STRING}"
+              },
+              "BLOB_STORAGE_ACCOUNT_KEY": {
+                "value": "${BLOB_STORAGE_ACCOUNT_KEY}"
+              }
+            }
+          },
+          "controllermodule": {
+            "settings": {
+              "image": "mcr.microsoft.com/azureedgedevices/azdacontroller:0.3.3-ubuntu-arm64v8",
+              "createOptions": ""
+            },
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "version": "1.0",
+            "startupOrder": 2
+          },
+          "ai-pipeline": {
+            "version": "1.0",
+            "startupOrder": 1,
+            "env": {
+              "APPLICATIONINSIGHTS_CONNECTION_STRING": {
+                "value": "${APPLICATIONINSIGHTS_CONNECTION_STRING}"
+              }
+            },
+            "type": "docker",
+            "status": "running",
+            "restartPolicy": "always",
+            "settings": {
+              "image": "$DS_AI_PIPELINE_IMAGE_URI",
+              "createOptions": {
+                "ExposedPorts": {
+                  "8554/tcp": {}
+                },
+                "HostConfig": {
+                  "Devices": [
+                    {
+                      "PathOnHost": "/dev/video0",
+                      "PathInContainer": "/dev/video0",
+                      "CgroupPermissions": "mrw"
+                    },
+                    {
+                      "PathOnHost": "/dev/video1",
+                      "PathInContainer": "/dev/video1",
+                      "CgroupPermissions": "mrw"
+                    }
+                  ],
+                  "Tmpfs": {
+                    "/tmp": "rw,noexec,nosuid,size=1500m"
+                  },
+                  "PortBindings": {
+                    "8554/tcp": [
+                      {
+                        "HostPort": "8554"
+                      }
+                    ]
+                  },
+                  "LogConfig": {
+                    "Type": "",
+                    "Config": {
+                      "max-size": "10m",
+                      "max-file": "10"
+                    }
+                  },
+                  "Runtime": "nvidia",
+                  "Binds": [
+                    "VideoUploaderCache:/tmp/VideoUploaderCache"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "$edgeHub": {
+      "properties.desired": {
+        "schemaVersion": "1.2",
+        "routes": {
+          "AIPipelineToHub": "FROM /messages/modules/ai-pipeline/outputs/* INTO $upstream",
+          "ControllerToIoTHub": "FROM /messages/modules/controllermodule/outputs/* INTO $upstream",
+          "ControllerToAIPipeline": "FROM /messages/modules/controllermodule/outputs/DeepStream INTO BrokeredEndpoint(\"/modules/ai-pipeline/inputs/Controller\")",
+          "ControllerToBusinessLogic": "FROM /messages/modules/controllermodule/outputs/DeepStream INTO BrokeredEndpoint(\"/modules/BusinessLogicModule/inputs/inputRegionsOfInterest\")",
+          "AIPipelineToBusinessLogic": "FROM /messages/modules/ai-pipeline/outputs/inference INTO BrokeredEndpoint(\"/modules/BusinessLogicModule/inputs/inferenceInput\")",
+          "BusinessLogicToAIPipeline": "FROM /messages/modules/BusinessLogicModule/outputs/recordingOutput INTO BrokeredEndpoint(\"/modules/ai-pipeline/inputs/recordingInput\")"
+        },
+        "storeAndForwardConfiguration": {
+          "timeToLiveSecs": 7200
+        }
+      }
+    },
+    "rtspsim": {
+      "properties.desired": {}
+    },
+    "ai-pipeline": {
+      "properties.desired": {
+        "outputVideoLength": 10,
+        "autoStopRecordingTime": 60
+      }
+    },
+    "BusinessLogicModule": {
+      "properties.desired": {
+        "startRecording": [
+          {
+            "configId": "PeopleDetection",
+            "state": true
+          },
+          {
+            "configId": "LicensePlateCascade",
+            "state": true
+          },
+          {
+            "configId": "PeopleTracker",
+            "state": true
+          },
+          {
+            "configId": "LicensePlateTracking",
+            "state": true
+          },
+          {
+            "configId": "ManufacturingDefectDetection",
+            "state": true
+          },
+          {
+            "configId": "CustomDeepStream",
+            "state": true
+          },
+          {
+            "configId": "PersonTracking",
+            "state": true
+          },
+          {
+            "configId": "PoseDetection",
+            "state": true
+          },
+          {
+            "configId": "TritonTest",
+            "state": true
+          },
+          {
+            "configId": "Yolov4Detection",
+            "state": true
+          }
+        ]
+      }
+    },
+    "controllermodule": {
+      "properties.desired": {
+        "azdaConfiguration": {
+          "platform": "DeepStream",
+          "components": {
+            "logLevel": "information",
+            "sensors": [
+              {
+                "name": "stream-01",
+                "kind": {
+                  "type": "vision",
+                  "subtype": "RTSP"
+                },
+                "endpoint": "rtsp://rtspsim:554/media/retailshop-15fps.mkv",
+                "regionsOfInterest": [
+                  {
+                      "color": "#ff0000",
+                      "label": "ROI # 1",
+                      "coordinates": [
+                        [
+                            0.0,
+                            0.0
+                        ],
+                        [
+                            0.0,
+                            0.9
+                        ],
+                        [
+                            0.9,
+                            0.9
+                        ],
+                        [
+                            0.9,
+                            0.0
+                        ]
+                      ]
+                  }
+                ]
+              }
+            ],
+            "deepStream": {
+              "enable": true,
+              "pipelineConfigs": [
+                {
+                  "id": "PeopleDetection",
+                  "unsecureZipUrl": "",
+                  "primaryModelConfigPath": "config_examples/pgie_config.txt",
+                  "secondaryModelConfigPaths": "",
+                  "trackerConfigPath": "",
+                  "deepstreamPassthrough": "",
+                  "pipelineOptions": {
+                    "dewarp": {
+                      "enable": false
+                    },
+                    "crop": {
+                      "enable": false
+                    },
+                    "osd": {
+                      "enable": true
+                    }
+                  }
+                }
+              ],
+              "streams": [
+                {
+                  "name": "stream-01",
+                  "uname": "testuser",
+                  "password": "testpassword",
+                  "configId": "PeopleDetection"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

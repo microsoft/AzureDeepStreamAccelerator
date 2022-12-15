@@ -1,0 +1,139 @@
+{
+    "azdaConfiguration": {
+        "platform": "DeepStream",
+        "components": {
+            "sensors": [
+                {
+                    "name": "stream-01",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.0,
+                                    0.0
+                                ],
+                                [
+                                    0.0,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.9
+                                ],
+                                [
+                                    0.9,
+                                    0.0
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-02",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_qHD.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.2,
+                                    0.2
+                                ],
+                                [
+                                    0.55,
+                                    0.2
+                                ],
+                                [
+                                    0.55,
+                                    0.55
+                                ],
+                                [
+                                    0.2,
+                                    0.55
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "stream-03",
+                    "kind": {
+                        "type": "vision",
+                        "subtype": "File"
+                    },
+                    "endpoint": "file:///opt/nvidia/deepstream/deepstream/samples/streams/sample_720p.mp4",
+                    "regionsOfInterest": [
+                        {
+                            "color": "#ff0000",
+                            "label": "ROI # 1",
+                            "coordinates": [
+                                [
+                                    0.2,
+                                    0.2
+                                ],
+                                [
+                                    0.55,
+                                    0.2
+                                ],
+                                [
+                                    0.55,
+                                    0.55
+                                ],
+                                [
+                                    0.2,
+                                    0.55
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "deepStream": {
+                "enable": true,
+                "pipelineConfigs": [
+                    {
+                        "id": "LicensePlateTracking",
+                        "unsecureZipUrl": "https://tsampigeworksp7356501018.blob.core.windows.net/peoplenet/p4d-cascade-scenario1.zip",
+                        "primaryModelConfigPath": "primarydetector/config_primary_detector.txt",
+                        "secondaryModelConfigPaths": "vehicletypenet/config_vehicletypes.txt",
+                        "trackerConfigPath": "",
+                        "deepstreamPassthrough": "",
+                        "pipelineOptions": {
+                            "dewarp": {
+                                "enable": false
+                            },
+                            "crop": {
+                                "enable": false
+                            },
+                            "osd": {
+                                "enable": true
+                            }
+                        }
+                    }
+                ],
+                "streams": [
+                    {
+                        "name": "stream-01",
+                        "uname": "",
+                        "password": "",
+                        "configId": "LicensePlateTracking"
+                    }
+                ]
+            },
+            "businessLogicConfig": {},
+            "logLevel": "information"
+        }
+    }
+}
