@@ -4,7 +4,7 @@ different licenses. Especially note that the ai-pipeline container is derived fr
 DeepStream and/or related deliverables is currently subject to the terms and limitations stated in this [license](https://developer.nvidia.com/deepstream-eula).
 
 **ATTENTION**
-No part of this code should be considered stable or is intended to be used only for test purposes. This code base is not designed for production use cases. It is provided as an example of how you might integrate Azure IoT Edge with NVIDIA DeepStream.
+No part of this code should be considered stable and is intended to be used only for test purposes. This code base is not designed for production use cases. It is provided as an example of how you might integrate Azure IoT Edge with NVIDIA DeepStream.
 
 # Table of Contents
 
