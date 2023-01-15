@@ -24,7 +24,7 @@ export default class RegionOfInterestService implements IRegionOfInterestService
                 const moduleTwin = res.responseBody;
                 if (moduleTwin) {
                     try {
-                        const sensor = moduleTwin.properties.desired.azdaSkill.components.sensors.find((sensor: any) => {
+                        const sensor = moduleTwin.properties.desired.azdaConfiguration.components.sensors.find((sensor: any) => {
                             return sensor.name === this.sensorName
                         });
                         if (sensor) {
@@ -49,7 +49,7 @@ export default class RegionOfInterestService implements IRegionOfInterestService
                 if (reportedModuleTwin) {
                     try {
                         let reportedSensorIndex: number = -1;
-                        const reportedSensor = reportedModuleTwin.properties.desired.azdaSkill.components.sensors.find((sensor: any, index: number) => {
+                        const reportedSensor = reportedModuleTwin.properties.desired.azdaConfiguration.components.sensors.find((sensor: any, index: number) => {
                             if (sensor.name === this.sensorName) {
                                 reportedSensorIndex = index;
                                 return true;
@@ -58,12 +58,12 @@ export default class RegionOfInterestService implements IRegionOfInterestService
                             }
                         });
                         if (reportedSensor && reportedSensorIndex !== -1) {
-                            reportedModuleTwin.properties.desired.azdaSkill.components.sensors[reportedSensorIndex].regionsOfInterest = regionsOfInterest;
+                            reportedModuleTwin.properties.desired.azdaConfiguration.components.sensors[reportedSensorIndex].regionsOfInterest = regionsOfInterest;
                             const updateResponse = await this.registry.updateModuleTwin(this.deviceName, this.moduleId, reportedModuleTwin, '*');
                             if (updateResponse.httpResponse.statusCode === 200) {
                                 const updatedModuleTwin = updateResponse.responseBody;
                                 if (updatedModuleTwin) {
-                                    const updatedSensor = updatedModuleTwin.properties.desired.azdaSkill.components.sensors.find((sensor: any) => {
+                                    const updatedSensor = updatedModuleTwin.properties.desired.azdaConfiguration.components.sensors.find((sensor: any) => {
                                         return sensor.name === this.sensorName
                                     });
                                     if (updatedSensor) {
