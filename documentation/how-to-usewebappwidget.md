@@ -6,7 +6,11 @@ It communicates the ROI locations to the Business Logic module, so that the modu
 Note: This web app does not allow for viewing "live-stream" videos from the edge device.
 
 ## Prerequisites
-Make sure you have completed all the prerequisites in the [Quickstart article](./quickstart-readme.md)
+
+If you intend to modify the webapp, you will need the following prerequisites:
+  - [Node.js](https://nodejs.org/en/download/)
+
+Additionally, please make sure you have completed all the prerequisites in the [Quickstart article](./quickstart-readme.md)
 
 ## How to use the web app
 1. You need to configure blob storage

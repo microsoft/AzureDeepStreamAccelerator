@@ -16,9 +16,9 @@ Complete the following software and AI-model items to configure your environment
 - Clone the [repository](../README.md) to your local environment.
 - Install the following:
 
-  - [Visual Studio Code (VS Code)](https://code.visualstudio.com/) with the [IoT Hub Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools) extension
-  - [Python](https://www.python.org/downloads/)
-  - [Node.js](https://nodejs.org/en/download/)
+  - [Visual Studio Code (VS Code)](https://code.visualstudio.com/) with:
+      - [Azure IoT Hub Extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-toolkit)
+      - [Azure IoT Edge Extension](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-edge)
 
 - An active Microsoft Azure subscription with required permissions.
 - A RTSP stream player ([VideoLAN VLC media player or similar](https://www.videolan.org/vlc/)).
@@ -29,18 +29,21 @@ Complete the following software and AI-model items to configure your environment
 You must deploy all of the following Azure Services:
 
 -	[Azure Container Registry](https://azure.microsoft.com/en-us/services/container-registry/), where you will store your custom Docker containers.
+      - [See here for deployment instructions](https://learn.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal?tabs=azure-cli)
 -	[Azure IoT Hub](https://azure.microsoft.com/en-us/services/iot-hub/), which will manage the IoT Edge solution.
+      - [See here for deployment instructions](https://learn.microsoft.com/en-us/azure/iot-hub/iot-hub-create-through-portal)
 -	[Azure Storage](https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview), which will be used to store your videos.
+      - [See here for deployment instructions](https://learn.microsoft.com/en-us/azure/storage/common/storage-account-create?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&bc=%2Fazure%2Fstorage%2Fblobs%2Fbreadcrumb%2Ftoc.json&tabs=azure-portal)
+      - Also create a **container** instance inside the Azure Storage Account ([see here for instructions](https://learn.microsoft.com/en-us/azure/storage/blobs/blob-containers-portal)).
+      This container will store your video snippets.
+      - Don't confuse this *Azure Storage Container* with a *Docker Container* or with the *Azure Container Registry*. The latter two refer to Docker Containers, while the *Azure Storage Container*
+      is also called a *blob storage container* - it is for storing arbitrary data (but not Docker Containers!)
 
 ### 1. Install the CLI tool
 
 Install the CLI tool. For information, visit the [CLI Tool documentation](../cli/README.md).
 
 ### 2. Get your Blob Storage Account Key
-
-Since you used the CLI Tool to install the Azure services, you’ll find an **Azure Storage Account** resource in your resource group in the Azure portal.
-
-If you don’t know how to find your **Azure Storage Account**, follow the steps below. If you know where to find it, skip forward to the next step.
 
 #### Find your Azure Storage Account
 
@@ -60,10 +63,12 @@ If you don’t know how to find your **Azure Storage Account**, follow the steps
 
    ![How to link your Blob Storage Account](./media/linking_iothub_file_upload.png)
 
+5. Save.
+
 ## Step 3. Set up the Edge device
 
 Azure DeepStream Accelerator is available on any device with sufficient storage space and an NVIDIA GPU, as long as it
-supports NVIDIA's container runtime. However, most of our testing is done on Jetson Orin. Please be advised that we cannot
+supports NVIDIA's container runtime. However, most of our testing is done on Jetson AGX Orin. Please be advised that we cannot
 handle issues opened in regards to untested setups.
 
 ### Discrete NVIDIA GPU
@@ -112,7 +117,11 @@ Here is an [example](../ds-ai-pipeline/x86_64/template.env) of an ```.env``` fil
    ```
 
 > [!NOTE]
-> If you’re using an x86 device, use [this manifest template](../ds-ai-pipeline/x86_64/deployment.default.template.json) and modify the values in [the template.env file](../ds-ai-pipeline/x86_64/template.env). <br>If you’re using an ARM device, use [this manifest template](../ds-ai-pipeline/arm/deployment.default.template.json) and modify the values in [the template.env file](../ds-ai-pipeline/arm/template.env).
+> If you’re using an x86 device, use [this manifest template](../ds-ai-pipeline/x86_64/deployment.default.template.json) and modify the values in [the template.env file](../ds-ai-pipeline/x86_64/template.env). <br>If you’re using an ARM device, use [this manifest template](../ds-ai-pipeline/arm/deployment.default.template.json) and modify the values in [the template.env file](../ds-ai-pipeline/arm/template.env). Further,
+if you'd like to use a USB camera, you will find [this manifest template](../ds-ai-pipeline/arm/deployment.usb.template.json) to be useful.
+
+> [!NOTE]
+> You should copy the template.env file and change its name to ".env" - *not* "template.env". The IoT extensions for VS Code assume that you have a file literally named ".env" in your deployment manifest template's directory.
 
 ### 1. Modify the .env file.
 
@@ -121,7 +130,7 @@ To set up your environment, you must make two changes to the ```.env``` file:
 1. Replace the value of ```IOTHUB_DEVICE_CONNECTION_STRING``` with the value from the Azure portal.
 2. Replace the value of ```BLOB_STORAGE_ACCOUNT_KEY``` with the value you saved in the Get your Blob Storage Account Key section, earlier in this article.
 
-Leave the other environment variables in the file with a blank or null value for now. We’ll fill them later.
+Leave the other environment variables in the file with a blank or null value for now. We’ll fill them in in later tutorials.
 
 ### 2. Create the manifest
 
