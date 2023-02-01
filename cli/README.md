@@ -1,6 +1,10 @@
 # CLI TOOL USAGE INSTRUCTIONS
 
-To install, please run `pip install .` or `pip install -e .` from this folder.
+## Prerequisites
+
+- [Python](https://www.python.org/downloads/)
+
+After installing the prerequisites, you may install this tool by running `pip install .` or `pip install -e .` from this folder.
 
 **Please note**: You must have Python installed on your system **and** it (along with its 'site-packages' directory) must be in your PATH.
 If this is not the case, the CLI tool will install, but you won't be able to run it. Please see [the Python documentation](https://docs.python.org/3/using/windows.html)
