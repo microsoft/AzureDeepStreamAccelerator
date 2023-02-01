@@ -32,7 +32,7 @@ This tutorial includes a pre-trained MaskRCNN model and parser.
 We recommend you upload the pre-trained model to a publicly accessible web server. You can do this using the **Azure Storage Account** you created in [Prerequisite checklist for Azure DeepStream Accelerator](./quickstart-readme.md).
 
 - To find the containers you downloaded, open the [Azure portal](https://ms.portal.azure.com/) and go to your **Azure Storage**. Then, on the left navigation, select **Containers**.
-- Create a new **Blob Storage Account** with **Container** access so you can upload videos that are available for public access. Save the path for this storage account as you’ll need it in the next step.
+- Create a new **Blob Storage Account** with **Container** access so you can upload models that are available for public access. Save the path for this storage account as you’ll need it in the next step.
 
 
 ## Step 3. Update the deployment manifest file
@@ -42,7 +42,7 @@ In this step you’ll learn how to update the deployment manifest file. First yo
 You can also modify the template for an ARM device by downloading the appropriate file and using the same steps below.
 
 
-1. Visit the [template file](../ds-ai-pipeline/x86_64/deployment.default.template.json) location and download the deployment manifest file.
+1. Visit the [template file](../ds-ai-pipeline/x86_64/deployment.default.template.json) location in your local clone of the repository.
 2. Update the Controller section of the manifest template file. To do this, update the ```unsecureZipUrl``` value to point to the URL of the model you uploaded in the previous step.
 
    For this tutorial, we’ve created  a zip file you can use, but if you want to understand how the zip file is structured, visit [Zip File Structure](./how-to-configcontroller.md#zip-file-structure).
@@ -52,7 +52,7 @@ You can also modify the template for an ARM device by downloading the appropriat
         ```JSON
                 "pipelineConfigs": [
                     {
-                    "id": "PeopleDetection",
+                    "id": "PeopleDetection", <--- Feel free to change this value to something more like 'ManufacturingDefectDetection' if you'd like, but if you do, please also change it in the 'streams' section of your JSON.
                     "unsecureZipUrl": "", <------- HERE
                     "primaryModelConfigPath": "pgie_config.txt", <----- CHANGE TO THIS VALUE
                     "secondaryModelConfigPaths": "",
@@ -119,9 +119,24 @@ In this step, you’ll use the module twin feature of Azure IoT Edge to update t
 
 When you’ve updated the Edge device with the model package, the simulated video runs automatically, and the model will begin making inferences.
 
+More specifically, the system will go through these steps:
+
+1. The AI-Pipeline module will download the zip file from the URL that is specified.
+1. The AI-Pipeline module will extract the zip file's contents and verify that it can find the model configuration file.
+1. The AI-Pipeline module will construct a DeepStream pipeline on the fly by choosing and configuring a few DeepStream/Gstreamer plugins based on the model configuration and the Controller module's twin.
+1. This DeepStream pipeline will attempt to:
+  1. Connect to all specified sources.
+  1. Deserialize the AI model, then reserialize it into whatever format (in this case, TRT).
+  1. Load the serialized AI model into the GPU.
+  1. Run the pipeline.
+
+Please note that DeepStream (and Gstreamer) is quite verbose with its logs and warnings. It is perfectly normal for it to attempt several model (de)serialization approaches before it settles on one that works.
+
 ## Step 5. Verify your results
 
-In this step you’ll learn how to use the Player web app to verify your results as well as how you can use a program like VLC to verify your results.
+Using one of the below approaches, you should be able to view the results, which should look something like this:
+
+![Example Output](./media/defect-detection.gif)
 
 ### Install the Player Web App
 
@@ -146,11 +161,12 @@ Specifically, you need to:
 
 #### Expose the stream from Docker
 
-The first part is easy, you just redeploy your configuration with the following adjustment in your deployment manifest.
-Make sure that the following items are in your deployment manifest template:
+**Note** This part should already be done by default in our deployment manifest templates.
+So this section serves to explain this a bit.
+If you'd like, you can remove this port binding, as it is a security best practice to remove
+bindings that you do not use.
 
-
-- Add this snippet to your deployment manifest *template* inside the 'createOptions' for ai-pipeline:
+- Ensure this snippet is present in your deployment manifest *template* inside the 'createOptions' for ai-pipeline (note that it should be there ):
 
 ```json
                 "ExposedPorts": {
@@ -177,7 +193,8 @@ Congratulations! You have successfully created and deployed an Edge AI solution 
 #### Expose the stream from the device's host OS
 
 This part is a little more cumbersome. There are many ways to do this, depending on your end goal. If your device has a monitor
-and keyboard plugged in, then you can simply open up VLC on the device and view the results by going to your stream's endpoint.
+and keyboard plugged in, then you can simply open up VLC on the device and view the results by going to your stream's endpoint,
+provided your device has the CPU/GPU bandwidth to handle that in addition to the running pipeline.
 
 But if your device is headless, then you can try port forwarding. The following instructions will create an SSH tunnel between
 your device and your computer and we will forward the traffic from port 8554 to your computer through that SSH tunnel,
