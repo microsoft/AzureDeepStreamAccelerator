@@ -33,7 +33,7 @@
     "@azure/storage-blob": "^12.11.0",
     "@fluentui/react-components": "^9.2.0",
     "axios": "^0.27.2",
-    "azure-iothub": "^1.15.0",
+    "azure-iothub": "^1.16.1",
     "babel-loader": "^8.2.5",
     "node-polyfill-webpack-plugin": "^2.0.1",
     "react": ">=16.8.0",
